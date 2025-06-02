@@ -2,7 +2,7 @@ vim.loader.enable()
 
 require("keymap")
 require("plugin_manager")
-require("config")
+require("lsp-config")
 
 vim.opt.number = true
 vim.cmd("highlight LineNr guifg=#999999")
