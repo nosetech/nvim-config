@@ -5,6 +5,7 @@ require("plugin_manager")
 require("config")
 
 vim.opt.number = true
+vim.cmd("highlight LineNr guifg=#999999")
 vim.opt.numberwidth = 1
 vim.opt.hlsearch = true
 vim.opt.termguicolors = true

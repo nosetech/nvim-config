@@ -1,9 +1,3 @@
--- Color Scheme
-vim.cmd("highlight GitGutterAdd guifg=green ctermfg=green")
-vim.cmd("highlight GitGutterChange guifg=blue ctermfg=blue")
-vim.cmd("highlight GitGutterDelete guifg=red ctermfg=red")
-vim.cmd("highlight LineNr guifg=#999999")
-
 -- snippets config
 vim.g.UltiSnipsExpandTrigger = "<tab>"
 vim.g.UltiSnipsJumpForwardTrigger = "<c-n>"
