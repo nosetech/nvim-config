@@ -4,17 +4,14 @@ return {
 		config = function()
 			local lspkind = require("lspkind")
 			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+			require("luasnip/loaders/from_vscode").lazy_load()
+			require("luasnip.loaders.from_lua").lazy_load()
 			cmp.setup({
 				snippet = {
 					expand = function(args)
 						vim.fn["vsnip#anonymous"](args.body)
 					end,
-				},
-				sources = {
-					{ name = "nvim_lsp" }, --ソース類を設定
-					{ name = "vsnip" }, -- For vsnip users.
-					{ name = "buffer" },
-					{ name = "path" },
 				},
 				mapping = cmp.mapping.preset.insert({
 					["<C-p>"] = cmp.mapping.select_prev_item(), --Ctrl+pで補完欄を一つ上に移動
@@ -22,6 +19,12 @@ return {
 					["<C-l>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }), --Ctrl+yで補完を選択確定
+				}),
+				sources = cmp.config.sources({
+					{ name = "luasnip", priority_weight = 20 },
+					{ name = "nvim_lsp" },
+					{ name = "buffer" },
+					{ name = "path" },
 				}),
 				experimental = {
 					ghost_text = false,
@@ -73,9 +76,16 @@ return {
 		"hrsh7th/cmp-path",
 	},
 	{
-		"hrsh7th/vim-vsnip",
+		"L3MON4D3/LuaSnip",
+		build = "make install_jsregexp",
+		config = function()
+			vim.keymap.set("n", "<leader>es", require("luasnip.loaders").edit_snippet_files, { desc = "Edit snippets" })
+		end,
 	},
 	{
-		"hrsh7th/cmp-vsnip",
+		"saadparwaiz1/cmp_luasnip",
+	},
+	{
+		"rafamadriz/friendly-snippets",
 	},
 }

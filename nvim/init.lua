@@ -1,4 +1,5 @@
 vim.loader.enable()
+vim.api.nvim_set_var("mapleader", "\\")
 
 require("keymap")
 require("plugin_manager")
