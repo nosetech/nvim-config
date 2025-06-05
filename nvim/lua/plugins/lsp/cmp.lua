@@ -22,6 +22,7 @@ return {
 				}),
 				sources = cmp.config.sources({
 					{ name = "luasnip", priority_weight = 20 },
+					{ name = "copilot" },
 					{ name = "nvim_lsp" },
 					{ name = "buffer" },
 					{ name = "path" },
@@ -40,6 +41,7 @@ return {
 							menu = 50, -- leading text (labelDetails)
 							abbr = 50, -- actual suggestion item
 						},
+						symbol_map = { Copilot = "" },
 						ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 						show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
@@ -87,5 +89,22 @@ return {
 	},
 	{
 		"rafamadriz/friendly-snippets",
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		config = function()
+			require("copilot").setup({
+				suggestion = { enabled = false },
+				panel = { enabled = false },
+				copilot_node_command = "node",
+			})
+		end,
+	},
+	{
+		"zbirenbaum/copilot-cmp",
+		config = function()
+			require("copilot_cmp").setup()
+		end,
 	},
 }
