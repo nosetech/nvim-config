@@ -1,32 +1,39 @@
 return {
-	{
-		"nvimtools/none-ls.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			local lsp_formatting = function(bufnr)
-				vim.lsp.buf.format({
-					filter = function(client)
-						return client.name == "null-ls"
-					end,
-					bufnr = bufnr,
-				})
-			end
-			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-			require("null-ls").setup({
-				on_attach = function(client, bufnr)
-					if client.supports_method("textDocument/formatting") then
-						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-						vim.api.nvim_create_autocmd("BufWritePre", {
-							buffer = bufnr,
-							group = augroup,
-							callback = function()
-								lsp_formatting(bufnr)
-							end,
-							desc = "[lsp] format on save",
-						})
-					end
-				end,
-			})
-		end,
-	},
+  {
+    "nvimtools/none-ls.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local null_ls = require("null-ls")
+      null_ls.setup({
+        debug = false,
+        sources = {
+          null_ls.builtins.formatting.prettier.with({
+            prefer_local = "node_modules/.bin/prettier",
+            filetypes = {
+              "html",
+              "css",
+              "javascript",
+              "typescript",
+              "javascriptreact",
+              "typescriptreact",
+              "json",
+            },
+          }),
+          null_ls.builtins.formatting.stylua.with({
+            filetypes = { "lua" },
+          }),
+        },
+      })
+
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        callback = function(args)
+          vim.lsp.buf.format({
+            bufnr = args.buf,
+            timeout_ms = 3000,
+            async = false,
+          })
+        end,
+      })
+    end,
+  },
 }
