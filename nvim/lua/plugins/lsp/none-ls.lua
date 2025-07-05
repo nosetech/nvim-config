@@ -9,6 +9,9 @@ return {
         sources = {
           null_ls.builtins.formatting.prettier.with({
             prefer_local = "node_modules/.bin/prettier",
+            condition = function(utils)
+              return utils.has_file({ ".prettierrc", ".prettierrc.js" })
+            end,
             filetypes = {
               "html",
               "css",
