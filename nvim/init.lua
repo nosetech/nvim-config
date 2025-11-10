@@ -21,10 +21,17 @@ vim.opt.clipboard = "unnamedplus"
 -- clipboard config for wsl
 -- yankしたときにクリップボードに保存する
 if vim.fn.has("wsl") == 1 then
-	vim.api.nvim_create_autocmd("TextYankPost", {
-		group = vim.api.nvim_create_augroup("Yank", { clear = true }),
-		callback = function()
-			vim.fn.system("clip.exe", vim.fn.getreg('"'))
-		end,
-	})
+  vim.api.nvim_create_autocmd("TextYankPost", {
+    group = vim.api.nvim_create_augroup("Yank", { clear = true }),
+    callback = function()
+      vim.fn.system("clip.exe", vim.fn.getreg('"'))
+    end,
+  })
 end
+
+vim.filetype.add({
+  extension = {
+    mdx = "mdx",
+  },
+})
+vim.treesitter.language.register("markdown", { "mdx" })
