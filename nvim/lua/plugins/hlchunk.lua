@@ -32,7 +32,7 @@ return {
 
 				indent = {
 					enable = true,
-					use_treesitter = true,
+					use_treesitter = false,
 					style = {
 						{ fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Whitespace")), "fg", "gui") },
 					},
